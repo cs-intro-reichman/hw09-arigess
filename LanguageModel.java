@@ -135,8 +135,23 @@ public class LanguageModel {
     }
 
     public static void main(String[] args) {
-        LanguageModel lm = new LanguageModel(7, 20);
-        lm.train("originofspecies.txt");
-        System.out.println(lm.generate("Natural", 172));
+        //LanguageModel lm = new LanguageModel(7, 20);
+        //lm.train("originofspecies.txt");
+        //System.out.println(lm.generate("Natural", 172));
+        int windowLength = Integer.parseInt(args[0]);
+        String initialText = args[1];
+        int generatedTextLength = Integer.parseInt(args[2]);
+        Boolean randomGeneration = args[3].equals("random");
+        String fileName = args[4];
+        // Create the LanguageModel object
+        LanguageModel lm;
+        if (randomGeneration)
+            lm = new LanguageModel(windowLength);
+        else
+            lm = new LanguageModel(windowLength, 20);
+// Trains the model, creating the map.
+        lm.train(fileName);
+// Generates text, and prints it.
+        System.out.println(lm.generate(initialText, generatedTextLength));
     }
 }
